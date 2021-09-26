@@ -16,11 +16,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 //Connecting to the database
-mongoose.connect(dbConfig.url,{
-    useNewUrlParser: true
-}).then(() =>{
-    console.log("Successfully connected to the database");
-}).catch(err => {
+mongoose.connect('mongodb+srv://bicicletas:pI3cJj9hXC@cluster0.4rxom.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    .then(() => {
+        console.log("Successfully connected to the database");
+    }).catch(err => {
     console.log("could not connect to the database. Exiting now..", err);
     process.exit();
 });

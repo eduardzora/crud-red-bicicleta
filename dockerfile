@@ -1,12 +1,23 @@
-# imagen de dockerhub que descargara
-FROM php:7.4-fpm
+FROM node:12-alpine3.14
+# Create app directory
+RUN mkdir /app
+WORKDIR /app
 
-# algunas configuraciones para que funcione el contenedor
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json /app/
 
-# instala composer en el contenedor
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-# da permisos para editar los archivos en esta ruta del container
-RUN chown -R www-data:www-data /var/www
-RUN chmod 755 /var/www
+# Bundle app source
+COPY . /app
 
+ENV NODE_ENV QA
+ENV PORT 3000
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
