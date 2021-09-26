@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-bici
+  labels:
+    app: back-bici
+    version: "1.0"
+spec:
+  selector:
+    matchLabels:
+      app: back-bici
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: back-bici
+        version: "1.0"
+    spec:
+      containers:
+        - name: map
+          image: icr.io/eduzora/back-bici:v1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          ports:
+            - name: http
+              containerPort: 5000
